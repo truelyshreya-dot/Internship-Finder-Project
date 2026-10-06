@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration | Internship Finder</title>
+<style>
+/* ===============================
+   Student Registration Page CSS
+================================ */
+
+/* General Page Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #0a3d62;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.navbar .login-btn {
+    background-color: #1dd1a1;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+/* Registration Form Container */
+.register-container {
+    max-width: 450px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0a3d62;
+    font-size: 28px;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.form-group textarea {
+    resize: none;
+}
+
+.note {
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Submit Button */
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #1dd1a1;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #10ac84;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #0a3d62;
+    color: white;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+/* ===============================
+   OTP Modal Styling
+================================ */
+.modal {
+    display: none; /* hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 25px 30px;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+    color: #0a3d62;
+}
+
+.modal-content input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#verifyBtn {
+    background-color: #1dd1a1;
+    color: #fff;
+}
+
+#verifyBtn:hover {
+    background-color: #10ac84;
+}
+
+#resendBtn {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+#resendBtn:hover {
+    background-color: #e67e22;
+}
+
+#resendBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Timer styling */
+#timer {
+    font-weight: bold;
+    color: #0a3d62;
+    margin-bottom: 10px;
+}
+
+/* New Branch Input Styling */
+#newBranchInput {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    margin-top: 8px;
+    display: none; /* initially hidden, JS will show */
+    box-sizing: border-box;
+}
+
+#newBranchInput:focus {
+    outline: none;
+    border-color: #1dd1a1;
+    box-shadow: 0 0 5px rgba(29, 209, 161, 0.5);
+}
+
+/* ===============================
+   Responsive Styling
+================================ */
+@media screen and (max-width: 500px) {
+    .register-container {
+        margin: 40px 20px;
+        padding: 20px;
+    }
+
+    .navbar {
+        padding: 12px 20px;
+    }
+
+    .navbar .nav-links {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .modal-content {
+        margin: 30% auto;
+        padding: 20px;
+    }
+
+    .modal-content input {
+        width: 90%;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header>
+    <nav class="navbar">
+        <div class="logo">InternshipFinder</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Internships</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Registration Form -->
+<div class="register-container">
+    <h2>Student Registration</h2>
+
+    <form id="registrationForm">
+        <div class="form-group">
+            <label>College Email</label>
+            <input type="email" id="email" placeholder="example@college.edu" required>
+            <div class="note">Only college email allowed</div>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+        </div>
+
+        <!-- Branch Section with Add Branch Option -->
+        <div class="form-group">
+            <label>Branch</label>
+            <select id="branch" required>
+                <option value="">Select Branch</option>
+                <option>Computer Engineering</option>
+                <option>Information Technology</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option value="addNew">Add Branch</option>
+            </select>
+            <input type="text" id="newBranchInput" placeholder="Enter new branch">
+        </div>
+
+        <div class="form-group">
+            <label>Year of Study</label>
+            <select id="year" required>
+                <option value="">Select Year</option>
+                <option>First Year</option>
+                <option>Second Year</option>
+                <option>Third Year</option>
+                <option>Final Year</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Skills</label>
+            <textarea id="skills" rows="3" placeholder="e.g. Java, Python, Web Development" required></textarea>
+        </div>
+
+        <button type="submit" class="register-btn" id="registerBtn">Register</button>
+    </form>
+</div>
+
+<!-- OTP Modal -->
+<div id="otpModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h3>Enter OTP</h3>
+        <input type="text" id="otpInput" placeholder="6-digit OTP">
+        <p id="timer">Time left: 60s</p>
+        <button id="verifyBtn">Verify OTP</button>
+        <button id="resendBtn">Resend OTP</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 Internship Finder | Student Registration</p>
+</footer>
+
+<script>
+// ===============================
+// Branch Add Option Logic
+// ===============================
+const branchSelect = document.getElementById("branch");
+const newBranchInput = document.getElementById("newBranchInput");
+
+branchSelect.addEventListener("change", function() {
+    if (branchSelect.value === "addNew") {
+        newBranchInput.style.display = "block";
+        newBranchInput.required = true;
+    } else {
+        newBranchInput.style.display = "none";
+        newBranchInput.required = false;
+    }
+});
+
+// ===============================
+// OTP Logic with 60-second expiry & Resend disable
+// ===============================
+let generatedOTP = "";
+let otpTimer;
+let timeLeft = 60;
+
+const registrationForm = document.getElementById("registrationForm");
+const otpModal = document.getElementById("otpModal");
+const closeModal = document.getElementById("closeModal");
+const verifyBtn = document.getElementById("verifyBtn");
+const resendBtn = document.getElementById("resendBtn");
+const timerDisplay = document.getElementById("timer");
+
+function showModal() {
+    otpModal.style.display = "block";
+}
+
+function hideModal() {
+    otpModal.style.display = "none";
+}
+
+// Countdown function
+function startTimer() {
+    clearInterval(otpTimer);
+    timeLeft = 60;
+    resendBtn.disabled = true; // disable resend while OTP is active
+    timerDisplay.textContent = `Time left: ${timeLeft}s`;
+    otpTimer = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time left: ${timeLeft}s`;
+        if(timeLeft <= 0) {
+            clearInterval(otpTimer);
+            alert("OTP expired! Please resend OTP.");
+            resendBtn.disabled = false; // enable resend
+        }
+    }, 1000);
+}
+
+// Generate OTP
+function generateOTP() {
+    generatedOTP = Math.floor(100000 + Math.random() * 900000);
+    alert(`Your OTP is: ${generatedOTP}`); // simulate sending
+    startTimer();
+}
+
+// Form submission
+registrationForm.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let year = document.getElementById("year").value;
+    let skills = document.getElementById("skills").value;
+
+    let branch = branchSelect.value;
+    if(branch === "addNew") {
+        branch = newBranchInput.value.trim();
+        if(branch === "") {
+            alert("Please enter your new branch");
+            return;
+        }
+    }
+
+    if(!email.includes(".edu")) {
+        alert("Enter a valid college email!");
+        return;
+    }
+    if(phone.length !== 10 || isNaN(phone)) {
+        alert("Enter a valid 10-digit phone number!");
+        return;
+    }
+
+    showModal();
+    generateOTP();
+});
+
+// Verify OTP
+verifyBtn.addEventListener("click", function(){
+    let enteredOTP = document.getElementById("otpInput").value;
+    if(enteredOTP === generatedOTP.toString()) {
+        alert("Registration Successful!");
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+        let year = document.getElementById("year").value;
+        let skills = document.getElementById("skills").value;
+        let branch = branchSelect.value;
+        if(branch === "addNew") branch = newBranchInput.value.trim();
+
+        let students = JSON.parse(localStorage.getItem("students") || "[]");
+        students.push({email, phone, branch, year, skills});
+        localStorage.setItem("students", JSON.stringify(students));
+
+        hideModal();
+        registrationForm.reset();
+        clearInterval(otpTimer);
+        newBranchInput.style.display = "none";
+        resendBtn.disabled = false;
+    } else {
+        alert("Incorrect OTP! Try again.");
+    }
+});
+
+// Resend OTP
+resendBtn.addEventListener("click", function(){
+    generateOTP();
+});
+
+// Close modal
+closeModal.onclick = hideModal;
+window.onclick = function(event){
+    if(event.target == otpModal) hideModal();
+};
+</script>
+</body>
+</html>

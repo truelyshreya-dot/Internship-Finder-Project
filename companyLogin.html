@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Company Login</title>
+</head>
+<body>
+
+<h2>Company Login</h2>
+
+<form id="loginForm">
+    <input type="email" id="email" placeholder="Company Email" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+</form>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let companies = JSON.parse(localStorage.getItem("companies")) || [];
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let company = companies.find(c => c.email === email && c.password === password);
+
+    if (!company) {
+        alert("Invalid credentials");
+        return;
+    }
+
+    if (company.status === "blocked") {
+        alert("Company blocked by admin");
+        return;
+    }
+
+    localStorage.setItem("loggedInCompany", email);
+    alert("Login successful!");
+    window.location.href = "companyDashboard.html";
+});
+</script>
+
+</body>
+</html>

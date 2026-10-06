@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration | Internship Finder</title>
+<style>
+/* General styling - unchanged from your old code */
+body { font-family: 'Segoe UI', sans-serif; background:#f5f7fa; margin:0; padding:0; color:#333; }
+.navbar { display:flex; justify-content:space-between; align-items:center; padding:15px 40px; background:#0a3d62; }
+.navbar .logo { color:#fff; font-size:24px; font-weight:bold; }
+.navbar .nav-links { list-style:none; display:flex; gap:20px; }
+.navbar .nav-links a { color:#fff; text-decoration:none; }
+.register-container { max-width:450px; margin:60px auto; background:#fff; padding:30px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+.register-container h2 { text-align:center; color:#0a3d62; margin-bottom:25px; font-size:28px; }
+.form-group { margin-bottom:18px; }
+.form-group label { display:block; font-weight:600; margin-bottom:6px; color:#333; }
+.form-group input, .form-group select, .form-group textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:15px; }
+.register-btn { width:100%; padding:12px; background:#1dd1a1; border:none; border-radius:6px; font-weight:bold; cursor:pointer; transition:0.3s; }
+.register-btn:hover { background:#10ac84; }
+.login-link { text-align:center; margin-top:15px; font-size:14px; }
+.login-link a { color:#1dd1a1; font-weight:bold; text-decoration:none; }
+.login-link a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+<nav class="navbar">
+  <div class="logo">InternshipFinder</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="studentLogin.html">Student Login</a></li>
+    <li><a href="companyLogin.html">Company Login</a></li>
+  </ul>
+</nav>
+</header>
+
+<div class="register-container">
+<h2>Student Registration</h2>
+
+<form id="studentForm">
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="text" id="name" required>
+  </div>
+  <div class="form-group">
+    <label>College Email</label>
+    <input type="email" id="email" placeholder="example@college.edu" required>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" required>
+  </div>
+  <button type="submit" class="register-btn">Register</button>
+</form>
+
+<div class="login-link">
+  Already registered? <a href="studentLogin.html">Login as Student</a>
+</div>
+<div class="login-link">
+  Are you a company? <a href="companyRegister.html">Register/Login as Company</a>
+</div>
+</div>
+
+<script>
+document.getElementById("studentForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  let email = document.getElementById("email").value.trim();
+
+  if(!email.endsWith(".edu")){
+    alert("Use valid college email (.edu)");
+    return;
+  }
+
+  let exists = students.find(s => s.email === email);
+  if(exists){
+    alert("Already registered. Redirecting to login page...");
+    window.location.href = "studentLogin.html";
+    return;
+  }
+
+  students.push({
+    name: name.value,
+    email: email,
+    password: password.value
+  });
+  localStorage.setItem("students", JSON.stringify(students));
+  alert("Registration successful! Now login.");
+  window.location.href = "studentLogin.html";
+});
+</script>
+</body>
+</html>

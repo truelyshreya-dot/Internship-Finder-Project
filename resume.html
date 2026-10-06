@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Resume | Internship Finder</title>
+<link rel="stylesheet" href="resume.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">InternshipFinder</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="studentRegister.html">Register</a></li>
+            <li><a href="resume.html" class="btn primary-btn">Create Resume</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="resume-page">
+
+    <!-- Form Section -->
+    <div class="resume-form">
+        <h2>Create Your Resume</h2>
+        <form id="resumeForm">
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <input type="file" id="rPhoto" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="rName" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="rEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="rPhone" required>
+            </div>
+            <div class="form-group">
+                <label>LinkedIn / GitHub</label>
+                <input type="text" id="rLinks" placeholder="LinkedIn or GitHub URL">
+            </div>
+            <div class="form-group">
+                <label>Education</label>
+                <textarea id="rEducation" rows="3" placeholder="Your education details" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Skills</label>
+                <textarea id="rSkills" rows="3" placeholder="Your skills" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Projects / Experience</label>
+                <textarea id="rProjects" rows="4" placeholder="Your projects or experience"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Certifications</label>
+                <textarea id="rCertifications" rows="2" placeholder="Your certifications"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Hobbies / Interests</label>
+                <textarea id="rHobbies" rows="2" placeholder="Your hobbies or interests"></textarea>
+            </div>
+            <button type="submit" class="resume-btn">Save Resume</button>
+        </form>
+    </div>
+
+    <!-- Live Preview Section -->
+    <div class="resume-preview">
+        <h2>Resume Preview</h2>
+        <div class="preview-card" id="previewCard">
+            <div class="preview-photo">
+                <img id="previewPhoto" src="default-avatar.png" alt="Profile Photo">
+            </div>
+            <h3 id="previewName">Your Name</h3>
+            <p id="previewEmail"><i class="fa fa-envelope"></i> your@email.com</p>
+            <p id="previewPhone"><i class="fa fa-phone"></i> 1234567890</p>
+            <p id="previewLinks"><i class="fa fa-link"></i> LinkedIn / GitHub</p>
+            <div class="divider"></div>
+            <div class="preview-section">
+                <h4><i class="fa fa-graduation-cap"></i> Education</h4>
+                <p id="previewEducation"></p>
+            </div>
+            <div class="preview-section">
+                <h4><i class="fa fa-code"></i> Skills</h4>
+                <p id="previewSkills"></p>
+            </div>
+            <div class="preview-section">
+                <h4><i class="fa fa-briefcase"></i> Projects / Experience</h4>
+                <p id="previewProjects"></p>
+            </div>
+            <div class="preview-section">
+                <h4><i class="fa fa-certificate"></i> Certifications</h4>
+                <p id="previewCertifications"></p>
+            </div>
+            <div class="preview-section">
+                <h4><i class="fa fa-heart"></i> Hobbies / Interests</h4>
+                <p id="previewHobbies"></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ===============================
+// Resume Save & Live Preview Logic
+// ===============================
+const resumeForm = document.getElementById("resumeForm");
+
+// Load existing resume from localStorage
+window.onload = function() {
+    const savedResume = JSON.parse(localStorage.getItem("studentResume") || "{}");
+    if(savedResume) {
+        document.getElementById("rName").value = savedResume.name || "";
+        document.getElementById("rEmail").value = savedResume.email || "";
+        document.getElementById("rPhone").value = savedResume.phone || "";
+        document.getElementById("rLinks").value = savedResume.links || "";
+        document.getElementById("rEducation").value = savedResume.education || "";
+        document.getElementById("rSkills").value = savedResume.skills || "";
+        document.getElementById("rProjects").value = savedResume.projects || "";
+        document.getElementById("rCertifications").value = savedResume.certifications || "";
+        document.getElementById("rHobbies").value = savedResume.hobbies || "";
+        if(savedResume.photo) document.getElementById("previewPhoto").src = savedResume.photo;
+        updatePreview();
+    }
+}
+
+// Function to update live preview
+function updatePreview() {
+    document.getElementById("previewName").innerText = document.getElementById("rName").value || "Your Name";
+    document.getElementById("previewEmail").innerText = document.getElementById("rEmail").value || "your@email.com";
+    document.getElementById("previewPhone").innerText = document.getElementById("rPhone").value || "1234567890";
+    document.getElementById("previewLinks").innerText = document.getElementById("rLinks").value || "LinkedIn / GitHub";
+    document.getElementById("previewEducation").innerText = document.getElementById("rEducation").value || "";
+    document.getElementById("previewSkills").innerText = document.getElementById("rSkills").value || "";
+    document.getElementById("previewProjects").innerText = document.getElementById("rProjects").value || "";
+    document.getElementById("previewCertifications").innerText = document.getElementById("rCertifications").value || "";
+    document.getElementById("previewHobbies").innerText = document.getElementById("rHobbies").value || "";
+}
+
+// Photo preview
+document.getElementById("rPhoto").addEventListener("change", function(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        document.getElementById("previewPhoto").src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+});
+
+// Update preview as user types
+resumeForm.addEventListener("input", updatePreview);
+
+// Save resume
+resumeForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const resumeData = {
+        photo: document.getElementById("previewPhoto").src,
+        name: document.getElementById("rName").value,
+        email: document.getElementById("rEmail").value,
+        phone: document.getElementById("rPhone").value,
+        links: document.getElementById("rLinks").value,
+        education: document.getElementById("rEducation").value,
+        skills: document.getElementById("rSkills").value,
+        projects: document.getElementById("rProjects").value,
+        certifications: document.getElementById("rCertifications").value,
+        hobbies: document.getElementById("rHobbies").value
+    };
+    localStorage.setItem("studentResume", JSON.stringify(resumeData));
+    alert("Resume saved successfully! You can edit it anytime.");
+});
+</script>
+
+</body>
+</html>

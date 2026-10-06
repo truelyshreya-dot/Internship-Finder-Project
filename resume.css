@@ -1,0 +1,192 @@
+/* ===============================
+   Resume Page Styles - Modern Design
+================================ */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #0a3d62;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.btn.primary-btn {
+    background-color: #1dd1a1;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+/* Resume Page Layout */
+.resume-page {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+}
+
+/* Form Section */
+.resume-form {
+    flex: 1;
+    min-width: 320px;
+    max-width: 450px;
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.resume-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0a3d62;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #1dd1a1;
+    box-shadow: 0 0 5px rgba(29,209,161,0.4);
+}
+
+.resume-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #1dd1a1;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.resume-btn:hover {
+    background-color: #10ac84;
+    transform: scale(1.02);
+}
+
+/* Preview Section */
+.resume-preview {
+    flex: 1;
+    min-width: 320px;
+    max-width: 450px;
+}
+
+.resume-preview h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0a3d62;
+}
+
+.preview-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+}
+
+.preview-photo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.preview-photo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1dd1a1;
+}
+
+.preview-card h3 {
+    text-align: center;
+    color: #0a3d62;
+    margin-bottom: 8px;
+}
+
+.preview-card p {
+    text-align: center;
+    margin: 3px 0;
+    color: #555;
+}
+
+.divider {
+    height: 2px;
+    background: linear-gradient(to right, #1dd1a1, #0a3d62);
+    margin: 20px 0;
+    border-radius: 2px;
+}
+
+.preview-section {
+    margin-bottom: 15px;
+}
+
+.preview-section h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1dd1a1;
+    margin-bottom: 6px;
+}
+
+.preview-section p {
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+    .resume-page { flex-direction: column; align-items: center; }
+}

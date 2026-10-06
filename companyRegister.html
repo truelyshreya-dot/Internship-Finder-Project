@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Registration | Internship Finder</title>
+<style>
+body { font-family:'Segoe UI', sans-serif; background:linear-gradient(to right,#0a3d62,#3c6382); margin:0; color:#fff; }
+.container { max-width:550px; background:#fff; margin:60px auto; padding:35px; border-radius:12px; box-shadow:0 15px 30px rgba(0,0,0,0.2); color:#000; }
+.container h2 { text-align:center; color:#0a3d62; }
+.container p { text-align:center; color:#666; margin-bottom:25px; }
+.form-group { margin-bottom:16px; }
+label { display:block; font-weight:600; margin-bottom:6px; }
+input, select { width:100%; padding:12px; border-radius:6px; border:1px solid #ccc; font-size:14px; }
+button { width:100%; padding:14px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; background:#1dd1a1; }
+button:hover { background:#10ac84; }
+.login-link { text-align:center; margin-top:15px; font-size:14px; }
+.login-link a { color:#1dd1a1; font-weight:bold; text-decoration:none; }
+.login-link a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Company Registration</h2>
+<p>Register your company for internship postings</p>
+
+<form id="companyForm">
+  <div class="form-group">
+    <label>Company Name</label>
+    <input type="text" id="name" required>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="hr@company.com" required>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" required>
+  </div>
+  <button type="submit">Register</button>
+</form>
+
+<div class="login-link">
+  Already registered? <a href="companyLogin.html">Login as Company</a>
+</div>
+<div class="login-link">
+  Are you a student? <a href="studentRegister.html">Register/Login as Student</a>
+</div>
+</div>
+
+<script>
+document.getElementById("companyForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  let companies = JSON.parse(localStorage.getItem("companies")) || [];
+  let email = document.getElementById("email").value.trim();
+
+  if(companies.find(c=>c.email===email)){
+    alert("Company already registered. Redirecting to login...");
+    window.location.href = "companyLogin.html";
+    return;
+  }
+
+  companies.push({
+    name: name.value,
+    email: email,
+    password: password.value,
+    status: "active"
+  });
+  localStorage.setItem("companies", JSON.stringify(companies));
+  alert("Company registered successfully! Now login.");
+  window.location.href = "companyLogin.html";
+});
+</script>
+
+</body>
+</html>
+yes

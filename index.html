@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internship Finder</title>
+<style>
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #0a3d62;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(rgba(10,61,98,0.8), rgba(10,61,98,0.8)), url('hero-bg.jpg') no-repeat center center/cover;
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+/* Hero Buttons */
+.hero .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Features Section */
+.features {
+    padding: 80px 20px;
+    background-color: #eef2f7;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    color: #0a3d62;
+    margin-bottom: 40px;
+}
+
+.features .feature-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #0a3d62;
+    color: white;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .navbar { flex-direction: column; align-items: flex-start; }
+    .navbar .nav-links { flex-direction: column; gap: 10px; margin-top: 10px; }
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 16px; }
+    .hero { padding: 60px 20px; }
+}
+
+@media screen and (max-width: 500px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header>
+    <nav class="navbar">
+        <div class="logo">InternshipFinder</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Internships</a></li>
+            <li id="studentAction"><!-- JS will insert Student Register/Login --></li>
+            <li id="companyAction"><!-- JS will insert Company Register/Login --></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Launch Your Career with Verified Internships</h1>
+    <p>Connect with top companies and explore internships that match your skills.</p>
+    <div class="cta-buttons">
+        <a href="companyList.html" class="btn primary-btn">Find Internships</a>
+        <a href="companyRegister.html" class="btn secondary-btn">Post an Internship</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <h2>Platform Features</h2>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:30px;">
+        <div class="feature-card">
+            <h3 style="color:#1dd1a1;">Application Status Tracking</h3>
+            <p>Real-time updates for students on their internship applications.</p>
+        </div>
+        <div class="feature-card">
+            <h3 style="color:#1dd1a1;">Bi-Directional Notifications</h3>
+            <p>Students notified about matching internships; companies notified about matching students.</p>
+        </div>
+        <div class="feature-card">
+            <h3 style="color:#1dd1a1;">Resume Management</h3>
+            <p>Students can update resumes anytime; applications auto-link to new resumes.</p>
+        </div>
+        <div class="feature-card">
+            <h3 style="color:#1dd1a1;">Skill Matching System</h3>
+            <p>Automatic matching of student skills with internship requirements.</p>
+        </div>
+        <div class="feature-card">
+            <h3 style="color:#1dd1a1;">AI-Based Recommendations</h3>
+            <p>Suggest internships to students based on their skills using AI algorithms.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>
+        © 2025 Internship Finder | 
+        <a href="about.html" style="color:#1dd1a1; text-decoration:none;">About Us</a>
+    </p>
+</footer>
+
+<!-- ===============================
+     JS for Dynamic Student/Company Buttons
+================================ -->
+<script>
+function setupNavbarButtons(){
+    const studentBtn = document.getElementById("studentAction");
+    const companyBtn = document.getElementById("companyAction");
+
+    let students = JSON.parse(localStorage.getItem("students") || "[]");
+    let companies = JSON.parse(localStorage.getItem("companies") || "[]");
+
+    // STUDENT BUTTON
+    if(students.length > 0){
+        studentBtn.innerHTML = '<a href="studentLogin.html">Student Login</a>';
+    } else {
+        studentBtn.innerHTML = '<a href="studentRegister.html">Student Register</a>';
+    }
+
+    // COMPANY BUTTON
+    if(companies.length > 0){
+        companyBtn.innerHTML = '<a href="companyLogin.html">Company Login</a>';
+    } else {
+        companyBtn.innerHTML = '<a href="companyRegister.html">Company Register</a>';
+    }
+}
+
+// Run on page load
+setupNavbarButtons();
+</script>
+
+</body>
+</html>

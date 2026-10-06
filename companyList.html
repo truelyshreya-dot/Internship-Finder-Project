@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registered Companies | Internship Finder</title>
+
+<style>
+/* ===============================
+   Company List Page CSS
+================================ */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0a3d62;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Page Container */
+.container {
+    padding: 40px 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #0a3d62;
+    margin-bottom: 30px;
+}
+
+/* Table Styling */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background-color: #1dd1a1;
+    color: #000;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 40px;
+}
+
+/* Register Button */
+.register-btn {
+    padding: 6px 12px;
+    background-color: #1dd1a1;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background-color: #10ac84;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    background-color: #0a3d62;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    th, td {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">InternshipFinder</div>
+    <a href="index.html">Home</a>
+</div>
+
+<!-- Content -->
+<div class="container">
+    <h2>Registered Companies</h2>
+
+    <div class="table-container">
+        <table id="companyTable">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Email</th>
+                    <th>Domain</th>
+                    <th>Internship Role</th>
+                    <th>Skills Required</th>
+                    <th>Stipend Type</th>
+                    <th>Stipend Amount</th>
+                    <th>Duration</th>
+                    <th>Action</th> <!-- New column for student register -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be added by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="noData" class="no-data" style="display:none;">
+        No companies have registered yet.
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    © 2025 Internship Finder | Company Records
+</footer>
+
+<script>
+/* ===============================
+   Load Company Data from localStorage
+================================ */
+
+const companies = JSON.parse(localStorage.getItem("companies")) || [];
+const tableBody = document.querySelector("#companyTable tbody");
+const noDataMsg = document.getElementById("noData");
+
+if (companies.length === 0) {
+    document.getElementById("companyTable").style.display = "none";
+    noDataMsg.style.display = "block";
+} else {
+    companies.forEach(company => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${company.companyName || "-"}</td>
+            <td>${company.email || "-"}</td>
+            <td>${company.domain || "-"}</td>
+            <td>${company.internshipRole || "-"}</td>
+            <td>${company.skillsRequired || "-"}</td>
+            <td>${company.stipendType || "-"}</td>
+            <td>${company.stipendAmount || "N/A"}</td>
+            <td>${company.duration || "-"}</td>
+            <td>
+                <button class="register-btn" onclick="registerForCompany('${company.companyName}')">Register</button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to handle registering for a company
+function registerForCompany(companyName){
+    // Save selected company in localStorage
+    localStorage.setItem("selectedCompany", companyName);
+
+    // Check if student is already registered
+    const students = JSON.parse(localStorage.getItem("students")) || [];
+    if(students.length === 0){
+        alert("Please register as a student first!");
+        window.location.href = "studentRegister.html";
+    } else {
+        // Redirect to company profile page if student registered
+        window.location.href = "companyProfile.html";
+    }
+}
+</script>
+
+</body>
+</html>
